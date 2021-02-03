@@ -1,0 +1,1 @@
+/Users/tspisak/Library/Enthought2/Canopy/edm/envs/User/lib/python2.7/copy_reg.py
