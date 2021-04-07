@@ -27,13 +27,16 @@ if __name__ == '__main__':
     for js in jsons:
         with open(js, "r") as read_file:
             participant_id = js.split('/')[-2]
-            data = json.load(read_file)
-
-
-            for d in data:
-                dt = datetime.fromtimestamp(d['timestamp'])
-                rows_list.append([participant_id, d['barcode'], d['timestamp'],
-                                  dt.date(), dt.time()])
+            try:
+                data = json.load(read_file)
+            except json.JSONDecodeError:
+                rows_list.append([participant_id, "n/a", "n/a",
+                                  "n/a", "n/a"])
+            else:
+                for d in data:
+                    dt = datetime.fromtimestamp(d['timestamp'])
+                    rows_list.append([participant_id, d['barcode'], d['timestamp'],
+                                      dt.date(), dt.time()])
 
     df = pd.DataFrame(rows_list, columns=['participant_id', 'barcode_id', 'timestamp', 'date', 'time'])
 
